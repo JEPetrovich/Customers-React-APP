@@ -2,7 +2,7 @@ import axios from 'axios';
 import QueryString from 'qs';
 import * as utilService from '../utilities/ServiceTools';
 
-const URL_BASE = 'http://192.168.237.65:8090/api';
+const URL_BASE = 'http://localhost:8090/api';
 
 export async function getCustomers(orientation, order, page) {
   const data = new FormData();
