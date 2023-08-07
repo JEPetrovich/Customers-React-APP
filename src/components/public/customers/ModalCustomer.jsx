@@ -79,7 +79,9 @@ export const ModalCustomer = (props) => {
 
   useEffect(() => {
     if (!open) {
-      setCustomer(new Customer());
+      setTimeout(() => {
+        setCustomer(new Customer());
+      }, 500);
     }
   }, [open]);
 
@@ -146,7 +148,9 @@ export const ModalCustomer = (props) => {
                   },
                 }}
                 onBlur={catchValue}
-                inputRef={inputDateRef}
+                inputRef={(input) => {
+                  inputDateRef.current = input;
+                }}
               />
             </LocalizationProvider>
             <Button

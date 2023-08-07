@@ -31,6 +31,7 @@ export const TableCustomers = (props) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [activePopover, setActivePopover] = useState(false);
   const [customerId, setCustomerId] = useState(null);
+  const [customerName, setCustomerName] = useState('');
 
   const orientationRef = useRef('asc');
   const orderRef = useRef('lastName');
@@ -55,6 +56,7 @@ export const TableCustomers = (props) => {
   };
 
   const openConfirmation = (events) => {
+    setCustomerName(events.target.dataset.name);
     setCustomerId(events.target.dataset.id);
     setShowConfirmation(true);
   };
@@ -198,6 +200,7 @@ export const TableCustomers = (props) => {
                   <TableCell component='th' scope='row'>
                     <IconButton
                       data-id={customer.id}
+                      data-name={`${customer.name} ${customer.lastName}`}
                       sx={{ marginRight: '.5em' }}
                       size='medium'
                       color='error'
@@ -250,7 +253,7 @@ export const TableCustomers = (props) => {
       </Paper>
       <ModalConfirmation
         open={showConfirmation}
-        message={'¿Está seguro que desea eliminar el cliente?'}
+        message={`¿Está seguro que desea eliminar al cliente ${customerName}?`}
         onClose={closeConfirmation}
         action={deleteCustomer}
         customer_id={customerId}
