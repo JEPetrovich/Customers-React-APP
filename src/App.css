@@ -27,6 +27,7 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-button > * {
+button > *,
+span > * {
   pointer-events: none !important;
 }

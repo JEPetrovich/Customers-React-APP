@@ -118,6 +118,7 @@ export const Customers = () => {
       >
         Cliente
       </Button>
+
       <CustomersContext.Provider
         value={{
           toast: { success: openSuccess, error: openError },
