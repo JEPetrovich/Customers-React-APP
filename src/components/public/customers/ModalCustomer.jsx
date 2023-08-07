@@ -154,7 +154,7 @@ export const ModalCustomer = (props) => {
               />
             </LocalizationProvider>
             <Button
-              sx={{ alignSelf: 'center', marginTop: '.5em' }}
+              sx={{ alignSelf: 'flex-start', marginTop: '.75em' }}
               onClick={clearInputs}
               color='error'
             >
