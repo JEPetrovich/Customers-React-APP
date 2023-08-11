@@ -12,7 +12,11 @@ const isEnum = (object) => {
 export const removeNullValues = (object, index, objects) => {
   if (typeof object === 'object' && !Array.isArray(object)) {
     for (let key in object) {
-      if (object[key] == null || object[key] == undefined) {
+      if (
+        object[key] == null ||
+        object[key] == undefined ||
+        object[key].length == 0
+      ) {
         delete object[key];
       } else if (isEnum(object[key])) {
         object[key] = object[key].name;
@@ -24,10 +28,14 @@ export const removeNullValues = (object, index, objects) => {
           }
         });
       } else if (
-        key.toLowerCase().includes('date') ||
-        key.toLowerCase().includes('period')
+        (key.toLowerCase().includes('date') ||
+          key.toLowerCase().includes('period')) &&
+        object[key]
       ) {
         object[key] = utilDate.createDate(new Date(object[key]));
+        if (object[key].includes('NaN')) {
+          delete object[key];
+        }
       } else {
         removeNullValues(object[key], index, objects);
       }

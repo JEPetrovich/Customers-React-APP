@@ -24,6 +24,7 @@ export const Customers = () => {
   const [activeBackdrop, setActiveBackdrop] = useState(false);
   const [success, setSuccess] = useState({ open: false, message: '' });
   const [error, setError] = useState({ open: false, message: '' });
+
   const defaultPageRef = useRef(0);
   const defaultOrientationRef = useRef('asc');
   const defaultOrderRef = useRef('lastName');
@@ -61,7 +62,7 @@ export const Customers = () => {
 
   const openError = (message) => {
     error.message = message;
-    setError({ ...success, open: true });
+    setError({ ...error, open: true });
   };
 
   const closeError = () => {
@@ -122,12 +123,7 @@ export const Customers = () => {
       <CustomersContext.Provider
         value={{
           toast: { success: openSuccess, error: openError },
-          openBackdrop: openBackdrop,
-          closeBackdrop: closeBackdrop,
-          modalCustomer: {
-            open: openModal,
-            close: closeModal,
-          },
+          modalCustomer: { open: openModal },
           customer: customer,
           setCustomer: setCustomer,
           totalPages: totalPages,
@@ -141,11 +137,13 @@ export const Customers = () => {
         {hasCustomers ? (
           <TableCustomers
             customers={{ collection: customers, reload: getCustomers }}
+            backdrop={{ open: openBackdrop, close: closeBackdrop }}
           />
         ) : (
           <p className='mt-4 text-slate-300'>No hay clientes cargados.</p>
         )}
       </CustomersContext.Provider>
+
       <Snackbar
         open={success.open}
         anchorOrigin={toastPosition}
@@ -166,6 +164,7 @@ export const Customers = () => {
           {error.message}
         </Alert>
       </Snackbar>
+
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={activeBackdrop}

@@ -39,9 +39,7 @@ export const ModalCustomer = (props) => {
   };
 
   const catchValue = async (event) => {
-    customer[event.target.name] = event.target.name.startsWith('date')
-      ? utilDate.createDate(new Date(event.target.value))
-      : event.target.value;
+    customer[event.target.name] = event.target.value;
   };
 
   const addCustomer = async () => {
@@ -72,9 +70,13 @@ export const ModalCustomer = (props) => {
 
   const clearInputs = () => {
     inputNameRef.current.value = '';
+    customer.name = null;
     inputLastNameRef.current.value = '';
+    customer.lastName = null;
     inputMailRef.current.value = '';
+    customer.mail = null;
     inputDateRef.current.value = '';
+    customer.dateOfBirth = null;
   };
 
   useEffect(() => {
@@ -93,6 +95,7 @@ export const ModalCustomer = (props) => {
         >
           {customer?.id ? 'Editar Cliente' : 'Agregar Cliente'}
         </DialogTitle>
+
         <DialogContent dividers>
           <Box sx={{ display: 'flex' }}>
             <TextField
@@ -141,12 +144,6 @@ export const ModalCustomer = (props) => {
                 sx={{ marginTop: '.5em', marginRight: '.5em' }}
                 size='small'
                 helperText='Fecha nacimiento'
-                slotProps={{
-                  textField: {
-                    size: 'small',
-                    helperText: 'Fecha nacimiento',
-                  },
-                }}
                 onBlur={catchValue}
                 inputRef={(input) => {
                   inputDateRef.current = input;

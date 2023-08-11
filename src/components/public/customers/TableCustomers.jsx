@@ -22,12 +22,11 @@ import { CustomersContext } from '../../../pages/dashboard/Customers';
 import { ModalConfirmation } from '../app/ModalConfirmation';
 
 export const TableCustomers = (props) => {
-  const { customers } = props;
+  const { customers, backdrop } = props;
 
   const { toast, modalCustomer, setCustomer, totalPages } =
     useContext(CustomersContext);
 
-  const [activeBackdrop, setActiveBackdrop] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [activePopover, setActivePopover] = useState(false);
   const [customerId, setCustomerId] = useState(null);
@@ -66,16 +65,8 @@ export const TableCustomers = (props) => {
     setCustomerId(null);
   };
 
-  const closeBackdrop = () => {
-    setActiveBackdrop(false);
-  };
-
-  const openBackdrop = () => {
-    setActiveBackdrop(true);
-  };
-
   const deleteCustomer = async (events) => {
-    openBackdrop();
+    backdrop.open();
     const response = await service.deleteCustomer(events.target.dataset.id);
     if (response?.status == 200) {
       customers.reload();
@@ -83,7 +74,7 @@ export const TableCustomers = (props) => {
     } else {
       toast.error(response.data.message);
     }
-    closeBackdrop();
+    backdrop.close();
   };
 
   const changeOrientation = async (events) => {
@@ -251,6 +242,7 @@ export const TableCustomers = (props) => {
           </Box>
         )}
       </Paper>
+
       <ModalConfirmation
         open={showConfirmation}
         message={`¿Está seguro que desea eliminar al cliente ${customerName}?`}
